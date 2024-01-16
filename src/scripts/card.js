@@ -1,9 +1,5 @@
+import {imagePopup} from './modal.js';
 const cardTemplate = document.querySelector('#card-template').content;
-const cardInput = document.querySelector('.places__list');
-
-function removeCard (eventTarget) {
-    eventTarget.remove();
-}
 
 
 function createCard (element) {
@@ -19,10 +15,25 @@ function createCard (element) {
         removeCard(eventTarget);
       }); 
     
+    cardElement.addEventListener('click', function (evt) {
+        likeCard(evt);
+    });
+
+    cardImage.addEventListener('click', function (evt) {
+        imagePopup(evt);
+    });
+    
     return cardElement;
 }
 
+function removeCard (eventTarget) {
+    eventTarget.remove();
+}
 
-initialCards.forEach(function (element){
-    cardInput.append(createCard(element));
-});
+function likeCard (evt) {
+    if (evt.target.classList.contains('card__like-button')){
+        evt.target.classList.toggle('card__like-button_is-active');}
+}
+
+
+export {createCard, removeCard, likeCard};
