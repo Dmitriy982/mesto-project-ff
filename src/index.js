@@ -25,7 +25,7 @@ closeButtons.forEach((button) => {
     button.addEventListener('click', () => closePopup(popup));
   });
 
-popupTypeNewCard.addEventListener('submit', handlecard);
+popupTypeNewCard.addEventListener('submit', handleCardFormSubmit);
 
 popupTypeEditForm.addEventListener('submit', handleProfileFormSubmit);
 
@@ -47,7 +47,7 @@ function handleProfileFormSubmit(evt) {
     closePopup(popupTypeEditForm);
 }
 
-function handlecard (evt) {
+function handleCardFormSubmit (evt) {
     evt.preventDefault();
     const card = {
         name:  popupInputTypeCardName.value,
