@@ -1,12 +1,3 @@
-const validationSettings = {
-    formSelector: '.popup__form',
-    inputSelector: '.popup__input',
-    submitButtonSelector: '.popup__button',
-    inactiveButtonClass: 'popup__button_disabled',
-    inputErrorClass: 'popup__input_type-error',
-    errorClass: 'popup__input-error-active'
-}; 
-
 const showInputError = (formElement, inputElement, errorMessage, validationSettings) => {
     const errorElement = formElement.querySelector(`.${inputElement.id}-error`);
     inputElement.classList.add(validationSettings.inputErrorClass);
@@ -14,7 +5,7 @@ const showInputError = (formElement, inputElement, errorMessage, validationSetti
     errorElement.classList.add(validationSettings.errorClass);
 };
 
-const hideInputError = (formElement, inputElement) => {
+const hideInputError = (formElement, inputElement, validationSettings) => {
     const errorElement = formElement.querySelector(`.${inputElement.id}-error`);
     inputElement.classList.remove(validationSettings.inputErrorClass);
     errorElement.classList.remove(validationSettings.errorClass);
@@ -82,4 +73,4 @@ const clearValidation = (formElement, validationSettings) => {
     toggleButtonState(inputList, buttonElement, validationSettings);
 }
 
-export {validationSettings, enableValidation, clearValidation};
+export {enableValidation, clearValidation};

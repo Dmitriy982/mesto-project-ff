@@ -2,7 +2,7 @@ import './pages/index.css';
 import {createCard, removeCard, likeCard} from './scripts/card.js';
 import {openPopup, closePopup, openImagePopup} from './scripts/modal.js';
 import {getInitialCards, getInformation, editProfile, addNewCard, changeProfileAvatar} from './scripts/api.js';
-import {validationSettings, enableValidation, clearValidation} from './scripts/validation.js';
+import {enableValidation, clearValidation} from './scripts/validation.js';
 import { data } from 'autoprefixer';
 
 
@@ -28,6 +28,15 @@ const popupInputTypeCardName = document.querySelector('.popup__input_type_card-n
 const popupInputTypeUrl = document.querySelector('.popup__input_type_url');
 const closeButtons = document.querySelectorAll('.popup__close');
 
+const validationSettings = {
+  formSelector: '.popup__form',
+  inputSelector: '.popup__input',
+  submitButtonSelector: '.popup__button',
+  inactiveButtonClass: 'popup__button_disabled',
+  inputErrorClass: 'popup__input_type-error',
+  errorClass: 'popup__input-error-active'
+}; 
+
 let profileId = '';
 
 
@@ -42,7 +51,6 @@ popupTypeEditForm.addEventListener('submit', handleProfileFormSubmit);
 
 profileImage.addEventListener('click', function() {
   openPopup(popupTypeAvatar);
-  clearValidation(popupTypeEditForm, validationSettings);
 });
 
 profileEditButton.addEventListener('click', function () {
@@ -55,7 +63,6 @@ profileEditButton.addEventListener('click', function () {
 
 profileAddButton.addEventListener('click', function () {
     openPopup(popupTypeNewCard);
-    clearValidation(popupTypeNewCard, validationSettings);
 }); 
 
   
@@ -72,6 +79,9 @@ Promise.all([getInformation(), getInitialCards()])
         cardSection.append(createCard(element, removeCard, likeCard, openImagePopup, profileId));
       });
   })
+  .catch((err) => {
+    console.log(err);
+  });
 
 
 function handleProfileFormSubmit(evt) {
@@ -102,6 +112,8 @@ function handleCardFormSubmit (evt) {
     cardSection.prepend(createCard(data, removeCard, likeCard, openImagePopup, profileId));
     closePopup(popupTypeNewCard);
     evt.target.reset();
+    button.classList.add(validationSettings.inactiveButtonClass);
+    button.disabled = true;
   })
   .catch((err) => {
     console.log(err);
@@ -120,6 +132,8 @@ function handleChangeAvatar (evt) {
       profileAvatar.backgroundImage = `url('${link.avatar}')`
       closePopup(popupTypeAvatar);
       evt.target.reset();
+      button.classList.add(validationSettings.inactiveButtonClass);
+      button.disabled = true;
     })
     .catch((err) => {
       console.log(err);
