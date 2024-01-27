@@ -1,4 +1,4 @@
-import {config, response, getInitialCards, getInformation, editProfile, addNewCard, deleteCard, addLike, removeLike} from './api.js';
+import {deleteCard, addLike, removeLike} from './api.js';
 
 const cardTemplate = document.querySelector('#card-template').content;
 
@@ -16,17 +16,21 @@ function createCard (element, removeCard, likeCard, openImagePopup, profileId) {
     likesCounter.textContent = element.likes.length;
 
     cardElement.querySelector('.card__title').textContent = element.name;
+
+    if (element.likes.some(likes => likes._id === profileId)) {
+        likeButton.classList.add('card__like-button_is-active');
+    } 
     
     if (profileId !== element.owner._id) {
         deleteButton.classList.add('card__delete-display-none');
     } else {
         deleteButton.addEventListener('click', (evt) => {
-            removeCard(evt, profileId);
+            removeCard(evt, element._id);
         });
     }
     
     likeButton.addEventListener('click', (evt) => {
-        likeCard(evt, element.owner._id, likesCounter);
+        likeCard(evt, element._id, likesCounter);
     });
 
     cardImage.addEventListener('click', openImagePopup); 

@@ -91,4 +91,4 @@ const changeProfileAvatar = (link) => {
         .then((res) => response(res));
 }
 
-export {config, response, getInitialCards, getInformation, editProfile, addNewCard, deleteCard, addLike, removeLike, changeProfileAvatar};
+export {getInitialCards, getInformation, editProfile, addNewCard, deleteCard, addLike, removeLike, changeProfileAvatar};
